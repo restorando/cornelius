@@ -19,6 +19,8 @@
       people: 'People'
     },
 
+    drawEmptyCells: true,
+
     formatHeaderLabel: function(i) {
       switch (true) {
         case i === 0:
@@ -109,8 +111,10 @@
               className: j > 1 ? classNameFor(cellValue) :
                          options.classPrefix + (j === 0 ? 'label' : 'people')
             });
-          } else {
+          } else if (options.drawEmptyCells) {
             td = create('td', { text: '-', className: options.classPrefix + 'empty' });
+          } else {
+            td = create('td');
           }
 
         tr.appendChild(td);
