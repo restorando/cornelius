@@ -1,7 +1,7 @@
 ;(function(exports){
 
   var options = {
-    monthNames: ['January', 'February', 'March', 'April', 'June', 'July',
+    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                  'August', 'September', 'October', 'November', 'December'],
 
     repeatLevels: {
@@ -19,6 +19,8 @@
       people: 'People'
     },
 
+    timeInterval: 'monthly',
+
     drawEmptyCells: true,
 
     rawNumberOnHover: true,
@@ -26,13 +28,15 @@
     classPrefix: 'cornelius-',
 
     formatHeaderLabel: function(i) {
-      switch (true) {
-        case i === 0:
-          return this.labels['time'];
-        case i === 1:
-          return this.labels['people'];
-        default:
-          return (i - 1).toString();
+      return i === 0 ? this.labels['people'] : i.toString();
+    },
+
+    formatTimeLabel: function(initial, timeInterval, i) {
+      if (timeInterval === 'monthly') {
+        date = new Date(initial.getTime());
+        date.setMonth(date.getMonth() + i - 1);
+
+        return options.monthNames[date.getMonth()] + ' ' + (date.getYear() + 1900);
       }
     }
   };
@@ -83,11 +87,12 @@
 
   function drawHeader(data) {
     var th = create('tr'),
-      monthLength = data[0].length,
-      classNames = ['time', 'people'];
+      monthLength = data[0].length;
+
+    th.appendChild(create('th', { text: options.labels.time, className: 'time' }));
 
     for (var i = 0; i < monthLength; i++) {
-      th.appendChild(create('th', { text: options.formatHeaderLabel(i), className: classNames[i]}));
+      th.appendChild(create('th', { text: options.formatHeaderLabel(i), className: 'people' }));
     }
     return th;
   }
@@ -120,30 +125,32 @@
 
     };
 
-    for (var i in data) {
+    for (var i = 0; i < data.length; i++) {
       var tr = create('tr'),
         row = data[i],
-        baseValue = row[1];
+        baseValue = row[0];
+
+      tr.appendChild(create('td', {
+        className: 'label',
+        textContent: options.formatTimeLabel(options.initialDate, options.timeInterval, i)
+      }));
 
       for (var j = 0; j < data[0].length; j++) {
         var value = row[j],
-          cellValue = j < 2 ? value : formatPercentage(value, baseValue),
-          td = null;
+          cellValue = j === 0 ? value : formatPercentage(value, baseValue),
+          opts = {};
 
           if (cellValue) {
-            td = create('td', {
+            opts = {
               text: cellValue,
-              title: j > 1 && options.rawNumberOnHover ? value : null,
-              className: j > 1 ? classNameFor(cellValue) :
-                         j === 0 ? 'label' : 'people'
-            });
+              title: j > 0 && options.rawNumberOnHover ? value : null,
+              className: j === 0 ? 'people' : classNameFor(cellValue)
+            };
           } else if (options.drawEmptyCells) {
-            td = create('td', { text: '-', className: 'empty' });
-          } else {
-            td = create('td');
+            opts = { text: '-', className: 'empty' };
           }
 
-        tr.appendChild(td);
+        tr.appendChild(create('td', opts));
       }
       fragment.appendChild(tr);
     }
@@ -157,7 +164,9 @@
     table.appendChild(drawHeader(data));
     table.appendChild(drawCells(data));
 
-    container.appendChild(create('div', { text: options.title, className: 'title' }));
+    if ((title = options.title)) {
+      container.appendChild(create('div', { text: title, className: 'title' }));
+    }
     container.appendChild(table);
 
     document.body.appendChild(container);

@@ -21,6 +21,8 @@
         font-size: 10pt;
         margin: auto;
         border: 1px solid #E4E4E4;
+        border-spacing: 0;
+        border-collapse: collapse;
       }
 
       .cornelius-table td, .cornelius-table th{
@@ -31,15 +33,8 @@
 
       .cornelius-table th {
         border-bottom: 1px solid #E4E4E4;
-        color: #3A3838;
-      }
-
-      .cornelius-table th.time, .cornelius-table th.people {
         border-right: 1px solid #E4E4E4;
-      }
-
-      .cornelius-percentage {
-
+        color: #3A3838;
       }
 
       .cornelius-percentage:after {
@@ -49,7 +44,7 @@
 
       td.cornelius-label {
         text-align: left;
-        padding-right: 50px;
+        width: 130px;
       }
 
       .cornelius-label, .cornelius-people {
@@ -109,20 +104,23 @@
       (function() {
 
         var data = [
-        ['June', 1519, 551, 130, 225, 1047, 1519, 28, 24, 43, 39, 21, 28],
-        ['July', 950, 25, 26, 28, 12, 18, 16, 24, 10, 4, 18, null],
-        ['August', 1078, 21, 17, 11, 21, 7, 12, 10, 5, 11, undefined, ""],
-        ['September', 1215, 38, 36, 25, 22, 13, 17, 6, 22, "", ""],
-        ['October', 1327, 47, 38, 33, 15, 30, 23, 20],
-        ['November', 1517, 82, 35, 39, 46, 18, 26],
-        ['December', 1974, 47, 40, 41, 29, 13],
-        ['January', 1268, 49, 36, 21, 22],
-        ['February', 1892, 82, 50, 32],
-        ['March', 1832, 59, 54],
-        ['April', 1171, 56]
-      ];
+          [1519, 551, 130, 225, 1047, 1519, 28, 24, 43, 39, 21, 28],
+          [950, 25, 26, 28, 12, 18, 16, 24, 10, 4, 18, null],
+          [1078, 21, 17, 11, 21, 7, 12, 10, 5, 11, undefined, ""],
+          [1215, 38, 36, 25, 22, 13, 17, 6, 22, "", ""],
+          [1327, 47, 38, 33, 15, 30, 23, 20],
+          [1517, 82, 35, 39, 46, 18, 26],
+          [1974, 47, 40, 41, 29, 13],
+          [1268, 49, 36, 21, 22],
+          [1892, 82, 50, 32],
+          [1832, 59, 54],
+          [1171, 56]
+        ];
 
-      new Cornelius({title: 'Reservation Cohort'}).draw(data);
+      new Cornelius({
+        title: 'Reservation Cohort',
+        initialDate: new Date(2012, 06, 01)
+      }).draw(data);
 
       })();
 
