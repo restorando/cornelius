@@ -4,6 +4,9 @@
     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                  'August', 'September', 'October', 'November', 'December'],
 
+    shortMonthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+                     'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+
     repeatLevels: {
       'low': [0, 2],
       'medium-low': [2, 5],
@@ -32,11 +35,26 @@
     },
 
     formatTimeLabel: function(initial, timeInterval, i) {
-      if (timeInterval === 'monthly') {
-        date = new Date(initial.getTime());
-        date.setMonth(date.getMonth() + i - 1);
+      var date = new Date(initial.getTime()),
+        getMonthName = function(date, wantShort) {
+          var monthNames = options[wantShort ? 'shortMonthNames' : 'monthNames'];
+          return monthNames[date.getMonth()];
+        },
+        getYear = function(date) {
+          return date.getYear() + 1900;
+        };
 
-        return options.monthNames[date.getMonth()] + ' ' + (date.getYear() + 1900);
+      if (timeInterval === 'daily') {
+        date.setDate(date.getDate() + i);
+        return getMonthName(date) + ' ' + date.getDate() + ', ' + getYear(date);
+      } else if (timeInterval === 'weekly') {
+        date.setDate(date.getDate() + i * 7);
+        return 'Week of ' + getMonthName(date, true) + ' ' + date.getDate() + ', ' + getYear(date);
+      } else if (timeInterval === 'monthly') {
+        date.setMonth(date.getMonth() + i - 1);
+        return getMonthName(date) + ' ' + getYear(date);
+      } else if (timeInterval === 'yearly') {
+        return getYear(date) + i;
       }
     }
   };
