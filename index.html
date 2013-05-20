@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <script type="text/javascript" src="cornelius.js"></script>
+    <style>
+      .cornelius-table td{
+        width: 40px;
+        text-align: center;
+        padding: 4px;
+        border: 1px solid grey;
+        -webkit-box-shadow: 0px 1px 25px -3px #BDBDBD;
+        -moz-box-shadow: 0px 1px 25px -3px #BDBDBD;
+        box-shadow: 0px 1px 25px -3px #BDBDBD;
+      }
+
+      .cornelius-percentage {
+        font-size: 11pt;
+      }
+
+      .cornelius-percentage:after {
+        content: "%";
+      }
+
+      td.cornelius-label {
+        text-align: left;
+      }
+
+      .cornelius-people {
+        background-color: #B4DDC8;
+        font-size: 11pt;
+        font-weight: bold;
+      }
+
+      .cornelius-low {
+        background-color: #FFFFFF;
+      }
+
+      .cornelius-medium-low {
+        background-color: #FCFAD9;
+      }
+
+      .cornelius-medium {
+        background-color: #FFEAA6;
+      }
+
+      .cornelius-medium-high {
+        background-color: #FFDA64;
+      }
+
+    </style>
+  </head>
+  <body>
+    <script>
+      var data = [
+        ['June', 1519, 51, 30, 25, 47, 40, 28, 24, 43, 39, 21, 28],
+        ['July', 950, 25, 26, 28, 12, 18, 16, 24, 10, 4, 18, null],
+        ['August', 1078, 21, 17, 11, 21, 7, 12, 10, 5, 11, undefined, ""],
+        ['September', 1215, 38, 36, 25, 22, 13, 17, 6, 22, "", ""],
+        ['October', 1327, 47, 38, 33, 15, 30, 23, 20],
+        ['November', 1517, 82, 35, 39, 46, 18, 26],
+        ['December', 1974, 47, 40, 41, 29, 13],
+        ['January', 1268, 49, 36, 21, 22],
+        ['February', 1892, 82, 50, 32],
+        ['March', 1832, 59, 54],
+        ['April', 1171, 56],
+        ['May', 1067]
+      ];
+
+      new Cornelius().draw(data);
+
+    </script>
+  </body>
+</html>
