@@ -1,6 +1,6 @@
 ;(function(exports){
 
-  var defaults = {
+  var options = {
     monthNames: ['January', 'February', 'March', 'April', 'June', 'July',
                  'August', 'September', 'October', 'November', 'December'],
 
@@ -21,6 +21,10 @@
 
     drawEmptyCells: true,
 
+    rawNumberOnHover: true,
+
+    classPrefix: 'cornelius-',
+
     formatHeaderLabel: function(i) {
       switch (true) {
         case i === 0:
@@ -30,9 +34,7 @@
         default:
           return (i - 1).toString();
       }
-    },
-
-    classPrefix: 'cornelius-'
+    }
   };
 
   function extend(target, source) {
@@ -42,21 +44,44 @@
 
   function create(el, options) {
     options = options || {};
+
     el = document.createElement(el);
-    if ((className = options.className)) el.className = className;
-    if ((textContent = options.text)) el.textContent = textContent;
+
+    if ((className = options.className)) {
+      delete options.className;
+      el.className = prefixClass(className);
+    }
+    if ((textContent = options.text)) {
+      delete options.text;
+      el.textContent = textContent;
+    }
+
+    for (var option in options) {
+      if ((opt = options[option])) el[option] = opt;
+    }
+
     return el;
+  }
+
+  function prefixClass(className) {
+    var prefixedClass = [],
+      classes = className.split(/\s+/);
+
+    for (var i in classes) {
+      prefixedClass.push(options.classPrefix + classes[i]);
+    }
+    return prefixedClass.join(" ");
   }
 
   function isNumber(val) {
     return Object.prototype.toString.call(val) === '[object Number]';
   }
 
-  var Cornelius = function Cornelius(options) {
-    this.options = extend(defaults, options || {});
+  var Cornelius = function Cornelius(opts) {
+    this.options = extend(options, opts || {});
   };
 
-  function drawHeader(options) {
+  function drawHeader(data) {
     var th = create('tr'),
       monthLength = data[0].length,
       classNames = ['time', 'people'];
@@ -67,7 +92,7 @@
     return th;
   }
 
-  function drawCells(options) {
+  function drawCells(data) {
     var fragment = document.createDocumentFragment(),
 
     formatPercentage = function(value, base) {
@@ -79,18 +104,18 @@
         floatValue = value && parseFloat(value),
         highestLevel = null;
 
-      var classNames = [options.classPrefix + 'percentage'];
+      var classNames = ['percentage'];
 
       for (var level in levels) {
         if (floatValue >= levels[level][0] && floatValue < levels[level][1]) {
-          classNames.push(options.classPrefix + level);
+          classNames.push(level);
           return classNames.join(" ");
         }
         highestLevel = level;
       }
 
       // handle 100% case
-      classNames.push(options.classPrefix + highestLevel);
+      classNames.push(highestLevel);
       return classNames.join(" ");
 
     };
@@ -108,11 +133,12 @@
           if (cellValue) {
             td = create('td', {
               text: cellValue,
+              title: j > 1 && options.rawNumberOnHover ? value : null,
               className: j > 1 ? classNameFor(cellValue) :
-                         options.classPrefix + (j === 0 ? 'label' : 'people')
+                         j === 0 ? 'label' : 'people'
             });
           } else if (options.drawEmptyCells) {
-            td = create('td', { text: '-', className: options.classPrefix + 'empty' });
+            td = create('td', { text: '-', className: 'empty' });
           } else {
             td = create('td');
           }
@@ -125,12 +151,16 @@
   }
 
   Cornelius.prototype.draw = function(data) {
-    var table = create('table', { className: this.options.classPrefix + 'table' });
+    var container = create('div', { className: 'container' }),
+      table = create('table', { className: 'table' });
 
-    table.appendChild(drawHeader(this.options));
-    table.appendChild(drawCells(this.options));
+    table.appendChild(drawHeader(data));
+    table.appendChild(drawCells(data));
 
-    document.body.appendChild(table);
+    container.appendChild(create('div', { text: options.title, className: 'title' }));
+    container.appendChild(table);
+
+    document.body.appendChild(container);
   };
 
   exports.Cornelius = Cornelius;
