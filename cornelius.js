@@ -12,10 +12,26 @@
       'high': [30, 50],
       'hot': [50, 70],
       'extra-hot': [70, 100]
-    }
-  },
+    },
 
-  classPrefix = 'cornelius-';
+    labels: {
+      time: 'Time',
+      people: 'People'
+    },
+
+    formatHeaderLabel: function(i) {
+      switch (true) {
+        case i === 0:
+          return this.labels['time'];
+        case i === 1:
+          return this.labels['people'];
+        default:
+          return (i - 1).toString();
+      }
+    },
+
+    classPrefix: 'cornelius-'
+  };
 
   function extend(target, source) {
     for (var prop in source) target[prop] = source[prop];
@@ -38,12 +54,13 @@
     this.options = extend(defaults, options || {});
   };
 
-  function drawMonths(options) {
+  function drawHeader(options) {
     var th = create('tr'),
-      monthLength = data[0].length;
+      monthLength = data[0].length,
+      classNames = ['time', 'people'];
 
     for (var i = 0; i < monthLength; i++) {
-      th.appendChild(create('th', { text: i === 0 ? '' : (i - 1).toString() }));
+      th.appendChild(create('th', { text: options.formatHeaderLabel(i), className: classNames[i]}));
     }
     return th;
   }
@@ -57,16 +74,22 @@
 
     classNameFor = function(value) {
       var levels = options.repeatLevels,
-        floatValue = value && parseFloat(value);
+        floatValue = value && parseFloat(value),
+        highestLevel = null;
 
-      var classNames = [classPrefix + 'percentage'];
+      var classNames = [options.classPrefix + 'percentage'];
 
       for (var level in levels) {
         if (floatValue >= levels[level][0] && floatValue < levels[level][1]) {
-          classNames.push(classPrefix + level);
+          classNames.push(options.classPrefix + level);
           return classNames.join(" ");
         }
+        highestLevel = level;
       }
+
+      // handle 100% case
+      classNames.push(options.classPrefix + highestLevel);
+      return classNames.join(" ");
 
     };
 
@@ -75,17 +98,20 @@
         row = data[i],
         baseValue = row[1];
 
-      for (var j = 0; j < row.length; j++) {
+      for (var j = 0; j < data[0].length; j++) {
         var value = row[j],
-          cellValue = j < 2 ? value : formatPercentage(value, baseValue);
+          cellValue = j < 2 ? value : formatPercentage(value, baseValue),
+          td = null;
 
-          if (!cellValue) continue;
-
-          var td = create('td', {
-            text: cellValue,
-            className: j > 1 ? classNameFor(cellValue) :
-                       classPrefix + (j === 0 ? 'label' : 'people')
-          });
+          if (cellValue) {
+            td = create('td', {
+              text: cellValue,
+              className: j > 1 ? classNameFor(cellValue) :
+                         options.classPrefix + (j === 0 ? 'label' : 'people')
+            });
+          } else {
+            td = create('td', { text: '-', className: options.classPrefix + 'empty' });
+          }
 
         tr.appendChild(td);
       }
@@ -95,9 +121,9 @@
   }
 
   Cornelius.prototype.draw = function(data) {
-    var table = create('table', { className: classPrefix + 'table' });
+    var table = create('table', { className: this.options.classPrefix + 'table' });
 
-    table.appendChild(drawMonths(this.options));
+    table.appendChild(drawHeader(this.options));
     table.appendChild(drawCells(this.options));
 
     document.body.appendChild(table);

@@ -2,48 +2,85 @@
   <head>
     <script type="text/javascript" src="cornelius.js"></script>
     <style>
-      .cornelius-table td{
-        width: 40px;
+      .cornelius-table {
+        background-color: #F5F3F3;
+        font-family: Helvetica;
+        font-size: 10pt;
+      }
+
+      .cornelius-table td, .cornelius-table th{
+        width: 50px;
         text-align: center;
-        padding: 4px;
-        border: 1px solid grey;
-        -webkit-box-shadow: 0px 1px 25px -3px #BDBDBD;
-        -moz-box-shadow: 0px 1px 25px -3px #BDBDBD;
-        box-shadow: 0px 1px 25px -3px #BDBDBD;
+        padding: 12px;
+      }
+
+      .cornelius-table th {
+        border-bottom: 1px solid #E4E4E4;
+        color: #3A3838;
+      }
+
+      .cornelius-table th.time, .cornelius-table th.people {
+        border-right: 1px solid #E4E4E4;
       }
 
       .cornelius-percentage {
-        font-size: 11pt;
+
       }
 
       .cornelius-percentage:after {
         content: "%";
+        margin-left: 2px;
       }
 
       td.cornelius-label {
         text-align: left;
+        padding-right: 50px;
       }
 
-      .cornelius-people {
-        background-color: #B4DDC8;
-        font-size: 11pt;
+      .cornelius-label, .cornelius-people {
+        border-bottom: 1px solid #E4E4E4;
+        border-right: 1px solid #E4E4E4;
         font-weight: bold;
+        color: #3A3838
       }
 
-      .cornelius-low {
+      .cornelius-empty {
         background-color: #FFFFFF;
       }
 
+      .cornelius-low {
+        background-color: #F4F8FD;
+      }
+
       .cornelius-medium-low {
-        background-color: #FCFAD9;
+        background-color: #D8E6FF;
       }
 
       .cornelius-medium {
-        background-color: #FFEAA6;
+        background-color: #A6CAFF;
       }
 
       .cornelius-medium-high {
-        background-color: #FFDA64;
+        background-color: #8FA4F8;
+      }
+
+      .cornelius-high {
+        background-color: #3963DD;
+      }
+
+      .cornelius-hot {
+        background-color: #163BA5;
+      }
+
+      .cornelius-extra-hot {
+        background-color: #041D66;
+      }
+
+      .cornelius-medium-high, .cornelius-high, .cornelius-hot, .cornelius-extra-hot {
+        color: #FFF;
+        -webkit-text-shadow: 1px 1px 1px black;
+        -moz-text-shadow: 1px 1px 1px black;
+        text-shadow: 1px 1px 1px black;
       }
 
     </style>
@@ -51,7 +88,7 @@
   <body>
     <script>
       var data = [
-        ['June', 1519, 51, 30, 25, 47, 40, 28, 24, 43, 39, 21, 28],
+        ['June', 1519, 551, 130, 225, 1047, 1519, 28, 24, 43, 39, 21, 28],
         ['July', 950, 25, 26, 28, 12, 18, 16, 24, 10, 4, 18, null],
         ['August', 1078, 21, 17, 11, 21, 7, 12, 10, 5, 11, undefined, ""],
         ['September', 1215, 38, 36, 25, 22, 13, 17, 6, 22, "", ""],
@@ -61,8 +98,7 @@
         ['January', 1268, 49, 36, 21, 22],
         ['February', 1892, 82, 50, 32],
         ['March', 1832, 59, 54],
-        ['April', 1171, 56],
-        ['May', 1067]
+        ['April', 1171, 56]
       ];
 
       new Cornelius().draw(data);
