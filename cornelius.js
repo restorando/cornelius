@@ -1,6 +1,6 @@
 ;(function(exports){
 
-    var defaults = {
+    var corneliusDefaults = {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                      'August', 'September', 'October', 'November', 'December'],
 
@@ -54,7 +54,9 @@
         formatYearlyLabel: function(date, i) {
             return date.getYear() + 1900 + i;
         }
-    };
+    },
+
+    defaults = corneliusDefaults;
 
     function extend() {
         var target = arguments[0];
@@ -229,7 +231,7 @@
     };
 
     var Cornelius = function(opts) {
-        this.config = extend({}, defaults, opts || {});
+        this.config = extend({}, Cornelius.getDefaults(), opts || {});
     };
 
     Cornelius.prototype.draw = function(cohort, container) {
@@ -239,6 +241,19 @@
         draw(cohort, container, this.config);
     };
 
+    extend(Cornelius, {
+        getDefaults: function() {
+            return defaults;
+        },
+
+        setDefaults: function(def) {
+            defaults = extend({}, corneliusDefaults, def);
+        },
+
+        resetDefaults: function() {
+            defaults = corneliusDefaults;
+        }
+    });
 
     if (typeof jQuery !== "undefined" && jQuery !== null) {
         jQuery.fn.cornelius = function(options) {
