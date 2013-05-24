@@ -149,36 +149,38 @@
         function drawCells(data) {
             var fragment = document.createDocumentFragment(),
 
-            formatPercentage = function(value, base) {
-                if (isNumber(value) && base > 0) {
-                    return (value / base * 100).toFixed(2);
-                } else if (isNumber(value)) {
-                    return 0;
-                }
-            },
+                startMonth = config.maxRows ? data.length - config.maxRows : 0,
 
-            classNameFor = function(value) {
-                var levels = config.repeatLevels,
-                    floatValue = value && parseFloat(value),
-                    highestLevel = null;
-
-                var classNames = ['percentage'];
-
-                for (var level in levels) {
-                    if (floatValue >= levels[level][0] && floatValue < levels[level][1]) {
-                        classNames.push(level);
-                        return classNames.join(" ");
+                formatPercentage = function(value, base) {
+                    if (isNumber(value) && base > 0) {
+                        return (value / base * 100).toFixed(2);
+                    } else if (isNumber(value)) {
+                        return 0;
                     }
-                    highestLevel = level;
-                }
+                },
 
-                // handle 100% case
-                classNames.push(highestLevel);
-                return classNames.join(" ");
+                classNameFor = function(value) {
+                    var levels = config.repeatLevels,
+                        floatValue = value && parseFloat(value),
+                        highestLevel = null;
 
-            };
+                    var classNames = ['percentage'];
 
-            for (var i = 0; i < data.length; i++) {
+                    for (var level in levels) {
+                        if (floatValue >= levels[level][0] && floatValue < levels[level][1]) {
+                            classNames.push(level);
+                            return classNames.join(" ");
+                        }
+                        highestLevel = level;
+                    }
+
+                    // handle 100% case
+                    classNames.push(highestLevel);
+                    return classNames.join(" ");
+
+                };
+
+            for (var i = startMonth; i < data.length; i++) {
                 var tr = create('tr'),
                     row = data[i],
                     baseValue = row[0];
@@ -227,14 +229,14 @@
     };
 
     var Cornelius = function(opts) {
-        this.options = extend({}, defaults, opts || {});
+        this.config = extend({}, defaults, opts || {});
     };
 
     Cornelius.prototype.draw = function(cohort, container) {
         if (!cohort)    throw new Error ("Please provide the cohort data");
         if (!container) throw new Error ("Please provide the cohort container");
 
-        draw(cohort, container, this.options);
+        draw(cohort, container, this.config);
     };
 
 
