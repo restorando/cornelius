@@ -1,5 +1,4 @@
 .cornelius-container {
-  background-color: #F5F3F3;
   font-family: Helvetica;
   padding: 20px 0px;
 }
@@ -13,19 +12,17 @@
 }
 
 .cornelius-table {
-  font-size: 10pt;
+  font-size: 9pt;
   margin: auto;
   border-spacing: 0;
   border-collapse: collapse;
   -webkit-box-shadow: rgba(0,0,0,0.18) 0 0 10px;
   -moz-box-shadow: rgba(0,0,0,0.18) 0 0 10px;
   box-shadow: rgba(0,0,0,0.18) 0 0 10px;
-}
-
-.cornelius-table {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  background-color: #F5F3F3;
 }
 
 /* fix for last cell rounded corner bug */
@@ -36,9 +33,9 @@
 }
 
 .cornelius-table td, .cornelius-table th{
-  width: 50px;
+  width: 42px;
   text-align: center;
-  padding: 12px;
+  padding: 10px;
 }
 
 .cornelius-table th {
