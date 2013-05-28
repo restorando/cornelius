@@ -29,10 +29,12 @@
 
         rawNumberOnHover: true,
 
+        initialMonth: 1,
+
         classPrefix: 'cornelius-',
 
         formatHeaderLabel: function(i) {
-            return i === 0 ? this.labels.people : i.toString();
+            return i === 0 ? this.labels.people : (this.initialMonth - 1 + i).toString();
         },
 
         formatDailyLabel: function(date, i) {
@@ -47,7 +49,7 @@
         },
 
         formatMonthlyLabel: function(date, i) {
-            date.setMonth(date.getMonth() + i - 1);
+            date.setMonth(date.getMonth() + i);
             return this.monthNames[date.getMonth()] + ' ' + getYear(date);
         },
 
@@ -157,7 +159,7 @@
                     if (isNumber(value) && base > 0) {
                         return (value / base * 100).toFixed(2);
                     } else if (isNumber(value)) {
-                        return 0;
+                        return "0.00";
                     }
                 },
 
@@ -227,6 +229,7 @@
         }
         mainContainer.appendChild(table);
 
+        container.innerHTML = "";
         container.appendChild(mainContainer);
     };
 
