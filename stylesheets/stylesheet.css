@@ -97,7 +97,7 @@ header h2 {
 
 .cornelius {
   position: absolute;
-  left: -179px;
+  left: -150px;
   top: -31px;
 }
 
@@ -128,6 +128,11 @@ aside#sidebar {
 aside#sidebar p.repo-owner,
 aside#sidebar p.repo-owner a {
   font-weight: bold;
+}
+
+aside#sidebar img {
+  max-width: 202px;
+  margin-bottom: 10px;
 }
 
 #downloads {
