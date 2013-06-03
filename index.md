@@ -118,15 +118,16 @@ Setting this property to `true` will display a white empty cell for those cells 
 of the main triangle.
 
 Example:
+
+{% highlight javascript %}
+{% include empty_cells_example.html %}
+{% endhighlight %}
+
 <div id="empty-cells-example"></div>
 
 <script type="text/javascript">
 {% include empty_cells_example.html %}
 </script>
-
-{% highlight javascript %}
-{% include empty_cells_example.html %}
-{% endhighlight %}
 
 Default: `true`
 
@@ -171,5 +172,60 @@ new Cornelius(initialDate, {
 Alternatively you can specify the functions that will be called to return the Strings for the header
 and date labels:
 
-## formatHeaderLabel
+## formatHeaderLabel(index)
 
+If setting the `initialMonth` and `labels` doesn't fullfill your needs, you can format the header label
+using a lower level api. You can pass a function that Cornelius will call for every column in the header
+and will use its return value. The only parameter it receives is the index of the column that will be drawn
+(zero index).
+
+Example:
+
+{% highlight javascript %}
+{% include format_header_example.html %}
+{% endhighlight %}
+
+<div id="format-header-example"></div>
+
+<script type="text/javascript">
+{% include format_header_example.html %}
+</script>
+
+# Formatting the dates
+
+There are 4 optional parameters that Cornelius can use to format the date labels. Depending with
+time interval you use, you can pass a `formatDailyLabel`, `formatWeeklyLabel`, `formatMonthlyLabel` and
+`formatYearlyLabel` function to format a `daily`, `weekly`, `monthly` and `yearly` cohort chart respectively.
+
+These functions takes 2 parameters: the date object corresponding to the initial date, and the column index.
+
+Example:
+
+{% highlight javascript %}
+{% include format_date_example.html %}
+{% endhighlight %}
+
+<div id="format-date-example"></div>
+
+<script type="text/javascript">
+{% include format_date_example.html %}
+</script>
+
+# Default options
+
+One instance of Cornelius can be used to draw multiple charts using the same options. You can also set
+the global defaults that will be used in any Cornelius instance.
+
+Example:
+
+{% highlight javascript %}
+Cornelius.getDefaults(); // { ..., initialMonth: 1, timeInterval: 'monthly', ... }
+
+Cornelius.setDefaults({initialMonth: 0, timeInterval: 'weekly'});
+
+Cornelius.getDefaults(); // { ..., initialMonth: 0, timeInterval: 'weekly', ... }
+
+Cornelius.resetDefaults();
+
+Cornelius.getDefaults(); // { ..., initialMonth: 1, timeInterval: 'monthly', ... }
+{% endhighlight %}

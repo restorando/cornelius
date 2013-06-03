@@ -1,0 +1,6 @@
+new Cornelius(initialDate, {
+  formatMonthlyLabel: function(date, i) {
+    date.setDate(date.getDate() + i); // update the date object to the corresponding month
+    return "Month " + (i + 1) + " - " + this.monthNames[i];
+  }
+}).draw(data, document.getElementById('format-date-example'));;

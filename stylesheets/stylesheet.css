@@ -95,6 +95,12 @@ header h2 {
   margin: 0 auto;
 }
 
+.cornelius {
+  position: absolute;
+  left: -179px;
+  top: -31px;
+}
+
 #content-wrapper {
   border-top: solid 1px #fff;
   padding-top: 30px;
