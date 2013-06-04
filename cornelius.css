@@ -46,6 +46,12 @@
   border-bottom: 1px solid #E4E4E4;
   border-right: 1px solid #E4E4E4;
   color: #3A3838;
+  font-weight: bold;
+}
+
+.cornelius-percentage {
+  border: none;
+  color: #000;
 }
 
 .cornelius-percentage:after {
@@ -71,6 +77,7 @@ td.cornelius-label {
 
 .cornelius-empty {
   background-color: #FFFFFF;
+  border: none;
 }
 
 .cornelius-low {

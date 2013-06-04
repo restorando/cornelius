@@ -8,12 +8,12 @@
                           'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 
         repeatLevels: {
-            'low': [0, 2],
-            'medium-low': [2, 5],
-            'medium': [5, 10],
-            'medium-high': [10, 30],
-            'high': [30, 50],
-            'hot': [50, 70],
+            'low': [0, 10],
+            'medium-low': [10, 20],
+            'medium': [20, 30],
+            'medium-high': [30, 40],
+            'high': [40, 60],
+            'hot': [60, 70],
             'extra-hot': [70, 100]
         },
 
@@ -29,12 +29,12 @@
 
         rawNumberOnHover: true,
 
-        initialMonth: 1,
+        initialIntervalNumber: 1,
 
         classPrefix: 'cornelius-',
 
         formatHeaderLabel: function(i) {
-            return i === 0 ? this.labels.people : (this.initialMonth - 1 + i).toString();
+            return i === 0 ? this.labels.people : (this.initialIntervalNumber - 1 + i).toString();
         },
 
         formatDailyLabel: function(date, i) {
@@ -85,7 +85,7 @@
         return date.getYear() + 1900;
     }
 
-    var draw = function(cohort, container, config) {
+    var draw = function(initialDate, cohort, container, config) {
 
         function create(el, options) {
             options = options || {};
@@ -191,7 +191,7 @@
 
                 tr.appendChild(create('td', {
                     className: 'label',
-                    textContent: formatTimeLabel(config.initialDate, config.timeInterval, i)
+                    textContent: formatTimeLabel(initialDate, config.timeInterval, i)
                 }));
 
                 for (var j = 0; j < data[0].length; j++) {
@@ -233,7 +233,10 @@
         container.appendChild(mainContainer);
     };
 
-    var Cornelius = function(opts) {
+    var Cornelius = function(initialDate, opts) {
+        if (!initialDate) throw new Error('The initialDate is a required argument');
+
+        this.initialDate = initialDate;
         this.config = extend({}, Cornelius.getDefaults(), opts || {});
     };
 
@@ -241,7 +244,7 @@
         if (!cohort)    throw new Error ("Please provide the cohort data");
         if (!container) throw new Error ("Please provide the cohort container");
 
-        draw(cohort, container, this.config);
+        draw(this.initialDate, cohort, container, this.config);
     };
 
     extend(Cornelius, {
