@@ -1,0 +1,30 @@
+{
+  "name": "cornelius",
+  "repo": "restorando/cornelius",
+  "description": "Cohort Visualization library",
+  "version": "0.1.0",
+  "keywords": [
+    "cohort",
+    "cornelius",
+    "chart",
+    "cohort chart",
+    "cohort visualization",
+    "restorando"
+  ],
+  "dependencies": {
+    "restorando/cornelius": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    [
+      "index.js",
+      "src/cornelius.js"
+    ]
+  ],
+  "styles": [
+    "src/cornelius.css"
+  ],
+  "demo": "http://restorando.github.io/cornelius"
+}
