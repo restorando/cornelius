@@ -3,7 +3,7 @@ layout: default
 title: Cornelius
 ---
 
-**Cornelius** can draw a Cohort Charts like this for you:
+**Cornelius** can draw a Cohort Chart like this for you:
 
 <div id="main-example"></div>
 
