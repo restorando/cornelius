@@ -1,5 +1,4 @@
-;(function(exports){
-
+;(function(globals) {
     var corneliusDefaults = {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                      'August', 'September', 'October', 'November', 'December'],
@@ -107,6 +106,9 @@
 
             return el;
         }
+
+
+        // prefix any css class we use in order to avoid any possible clashes
 
         function prefixClass(className) {
             var prefixedClass = [],
@@ -269,6 +271,11 @@
         };
     }
 
-    exports.Cornelius = Cornelius;
+    // show it to the world!!
 
-})(window);
+    if (globals.exports) {
+        globals.exports = Cornelius;
+    } else {
+        globals.Cornelius = Cornelius;
+    }
+})(typeof module === "function" ? module : window);

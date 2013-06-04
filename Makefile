@@ -1,11 +1,11 @@
 
-build: components index.js cornelius.css
-	@component build --dev
+build: components index.js
+	@component build
 
 components: component.json
-	@component install --dev
+	@component install
 
 clean:
-	rm -fr build components template.js
+	rm -fr build components
 
 .PHONY: clean
