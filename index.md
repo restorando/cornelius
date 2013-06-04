@@ -24,6 +24,10 @@ Just include the javascript and stylesheet files and you are ready to go. No jQu
 <script type="text/javascript" src="cornelius.js"></script>
 {% endhighlight %}
 
+If you are using [component](http://component.io):
+
+    $ component install restorando/cornelius
+
 # API
 
 {% highlight javascript %}

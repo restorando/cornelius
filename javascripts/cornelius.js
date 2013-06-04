@@ -1,5 +1,4 @@
-;(function(exports){
-
+;(function(globals) {
     var corneliusDefaults = {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                      'August', 'September', 'October', 'November', 'December'],
@@ -269,6 +268,9 @@
         };
     }
 
-    exports.Cornelius = Cornelius;
-
-})(window);
+    if (globals.exports) {
+        globals.exports = Cornelius;
+    } else {
+        globals.Cornelius = Cornelius;
+    }
+})(typeof module === "function" ? module : window);
