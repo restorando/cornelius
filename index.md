@@ -58,11 +58,11 @@ The first parameter the `draw` method takes is as an array of arrays whose value
 
 ## Container
 
-The second parameter it takes in a DOM element where the table will be inserted as a child element.
+The second parameter it takes is a DOM element, where the table will be inserted as a child element.
 
 # Options
 
-Cornelius accept any of these option values passed to the constructor:
+Cornelius accepts any of these option values passed to the constructor:
 
 ## timeInterval
 
@@ -83,11 +83,11 @@ Default: `'monthly'`
 
 ## repeatLevels
 
-It is possible to customize the colors of the cells depending on the percentage each of those have.
-You will have to specify the class names and the percentage ranges the library will use to decide which class
-will assign to each cell.
+It is possible to customize the colours of the cells depending on the percentage each of them have.
+You will have to specify the class names and the percentage ranges the library will use in order to decide which class
+will be assigned to each cell.
 
-Below are the default css classes and ranges the library use.
+Below are the default css classes and ranges the library uses.
 
 {% highlight javascript %}
 
@@ -133,13 +133,13 @@ Default: `true`
 
 ## rawNumberOnHover
 
-If `rawNumberOnHover` is set to true, will display the raw number while leaving the mouse on top of a cell.
+If `rawNumberOnHover` is set to true, it will display the raw number while leaving the mouse on top of the cell.
 
 Default: `true`
 
-## initialMonth
+## initialIntervalNumber
 
-This property will allow you to specify which will be the initial month number to display in the column headers.
+This property will allow you to specify the initial number that will be displayed in the first column header.
 
 Default: `1`
 
@@ -157,7 +157,7 @@ new Cornelius(initialDate, {
 });
 {% endhighlight %}
 
-The short and long month names can also be customized:
+The long and short month names can also be customized:
 
 {% highlight javascript %}
 new Cornelius(initialDate, {
@@ -174,10 +174,8 @@ and date labels:
 
 ## formatHeaderLabel(index)
 
-If setting the `initialMonth` and `labels` doesn't fullfill your needs, you can format the header label
-using a lower level api. You can pass a function that Cornelius will call for every column in the header
-and will use its return value. The only parameter it receives is the index of the column that will be drawn
-(zero index).
+If setting the `initialIntervalNumber` and `labels` doesn't fullfill your needs, you can format the header label
+using a lower level API. You can pass a function that will be called for every column header that is being drawn, and its return value will be used as the header label. The only parameter it receives is the index of the column that will be drawn (zero index).
 
 Example:
 
@@ -193,7 +191,7 @@ Example:
 
 # Formatting the dates
 
-There are 4 optional parameters that Cornelius can use to format the date labels. Depending with
+There are 4 optional parameters that Cornelius can use to format the date labels. Depending on the
 time interval you use, you can pass a `formatDailyLabel`, `formatWeeklyLabel`, `formatMonthlyLabel` and
 `formatYearlyLabel` function to format a `daily`, `weekly`, `monthly` and `yearly` cohort chart respectively.
 
@@ -219,13 +217,13 @@ the global defaults that will be used in any Cornelius instance.
 Example:
 
 {% highlight javascript %}
-Cornelius.getDefaults(); // { ..., initialMonth: 1, timeInterval: 'monthly', ... }
+Cornelius.getDefaults(); // { ..., initialIntervalNumber: 1, timeInterval: 'monthly', ... }
 
-Cornelius.setDefaults({initialMonth: 0, timeInterval: 'weekly'});
+Cornelius.setDefaults({initialIntervalNumber: 0, timeInterval: 'weekly'});
 
-Cornelius.getDefaults(); // { ..., initialMonth: 0, timeInterval: 'weekly', ... }
+Cornelius.getDefaults(); // { ..., initialIntervalNumber: 0, timeInterval: 'weekly', ... }
 
 Cornelius.resetDefaults();
 
-Cornelius.getDefaults(); // { ..., initialMonth: 1, timeInterval: 'monthly', ... }
+Cornelius.getDefaults(); // { ..., initialIntervalNumber: 1, timeInterval: 'monthly', ... }
 {% endhighlight %}
