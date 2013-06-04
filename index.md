@@ -235,7 +235,7 @@ Example:
 
 # Trimming the table
 
-If your cohort data is too large and want only to display the first Ncolumns or the last M rows, you
+If your cohort data is too large and want only to display the first N columns or the last M rows, you
 can use the `maxRows` and `maxColumns` properties.
 
 Example:
