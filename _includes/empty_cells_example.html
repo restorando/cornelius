@@ -1,4 +1,8 @@
-new Cornelius(initialDate, {
+Cornelius.draw({
+  drawEmptyCells: false,
+
+  initialDate: initialDate,
   timeInterval: 'daily',
-  drawEmptyCells: false
-}).draw(data, document.getElementById('empty-cells-example'));
+  cohort: data,
+  container: document.getElementById('empty-cells-example')
+});

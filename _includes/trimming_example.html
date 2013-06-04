@@ -1,4 +1,8 @@
-new Cornelius(initialDate, {
+Cornelius.draw({
   maxRows: 4,
-  maxColumns: 3
-}).draw(data, document.getElementById('trimming-example'));
+  maxColumns: 3,
+
+  initialDate: initialDate,
+  cohort: data,
+  container: document.getElementById('trimming-example')
+});

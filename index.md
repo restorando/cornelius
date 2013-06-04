@@ -30,14 +30,7 @@ If you are using [component](http://component.io):
 
 # API
 
-{% highlight javascript %}
-var cornelius = new Cornelius( new Date(2012, 06), [options] );
-cornelius.draw(data, container);
-{% endhighlight %}
-
-## Quick draw
-
-The easiest way to draw a chart is to use the `draw` class method:
+There is only one method you can use:
 
 {% highlight javascript %}
 Cornelius.draw({
@@ -63,10 +56,8 @@ Cornelius.draw({
 });
 {% endhighlight %}
 
-## Constructor
-
-The first parameter the constructor takes is a `Date` object which will be used as the initial date
-to compute the dates that will be shown in the chart.
+The `initialDate` property is a `Date` object that will be used as the initial date
+to compute the following dates that will be shown in the chart.
 
 This `Date` object should have the `date` part of the object set as the beginning of the month (day 1),
 and must have the time set to '00:00'.
@@ -77,18 +68,9 @@ var date = new Date(2012, 6); // Sun Jul 01 2012 00:00:00
 
 Be careful with the month argument you pass since the `Date` object considers January as month 0.
 
-## Methods
-
-The only method that an instance of **Cornelius** exposes is the `draw` method, that takes 2 required
-parameters.
-
 ## Data Format
 
-The first parameter the `draw` method takes is as an array of arrays whose values will be mapped to the cohort table cells in the same order as provided. Given the distinctive triangle shape of the chart, each array should either have a value less than the previous one, or it should be filled with `null`, `undefined`, or `false` values.
-
-## Container
-
-The second parameter it takes is a DOM element, where the table will be inserted as a child element.
+The `cohort` property must be an array of arrays whose values will be mapped to the cohort table cells in the same order as provided. Given the distinctive triangle shape of the chart, each array should either have a value less than the previous one, or it should be filled with `null`, `undefined`, or `false` values.
 
 # Options
 
@@ -121,19 +103,23 @@ Below are the default css classes and ranges the library uses.
 
 {% highlight javascript %}
 
-var options = {
-  repeatLevels: {
-    'low': [0, 10],
-    'medium-low': [10, 20],
-    'medium': [20, 30],
-    'medium-high': [30, 40],
-    'high': [40, 60],
-    'hot': [60, 70],
-    'extra-hot': [70, 100]
-  }
+var repeatLevels = {
+  'low': [0, 10],
+  'medium-low': [10, 20],
+  'medium': [20, 30],
+  'medium-high': [30, 40],
+  'high': [40, 60],
+  'hot': [60, 70],
+  'extra-hot': [70, 100]
 }
 
-new Cornelius(initialDate, options).draw(...);
+Cornelius.draw({
+  repeatLevels: repeatLevels,
+
+  initialDate: new Date(2012, 3),
+  cohort: data,
+  container: document.getElementById('container')
+});
 {% endhighlight %}
 
 In this example, Cornelius will assign the `cornelius-low` class to each cell with a value between 0%
@@ -178,24 +164,32 @@ Default: `1`
 The library uses only 3 strings for the labels that can be specified in the options object:
 
 {% highlight javascript %}
-new Cornelius(initialDate, {
+Cornelius.draw({
   labels: {
     time: 'Zeit', // Time
     people: 'Menschen', // People
     weekOf: 'Woche Vom' // Week Of
-  }
+  },
+
+  initialDate: new Date(2011, 6),
+  cohort: data,
+  container: document.getElementById('container')
 });
 {% endhighlight %}
 
 The long and short month names can also be customized:
 
 {% highlight javascript %}
-new Cornelius(initialDate, {
+Cornelius.draw({
   monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
 
   shortMonthNames: ['Ene', 'Feb', 'Mar', 'Abr', 'Mar', 'Jun', 'Jul',
-                    'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+                    'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+
+  initialDate: initialDate,
+  cohort: data,
+  container: document.getElementById('container')
 });
 {% endhighlight %}
 
@@ -256,6 +250,19 @@ Example:
 {% include trimming_example.html %}
 </script>
 
+# Chart Title
+
+To display a title above the chart, use the `title` option:
+
+{% highlight javascript %}
+Cornelius.draw({
+  title: 'My Chart Title',
+
+  initialDate: new Date(2011, 6),
+  cohort: data,
+  container: document.getElementById('container')
+});
+{% endhighlight %}
 
 # Default options
 

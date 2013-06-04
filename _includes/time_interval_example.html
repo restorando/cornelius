@@ -1,3 +1,7 @@
-new Cornelius(initialDate, {
-  timeInterval: 'weekly'
-}).draw(data, document.getElementById('time-interval-example'));
+Cornelius.draw({
+  timeInterval: 'weekly',
+
+  initialDate: initialDate,
+  cohort: data,
+  container: document.getElementById('time-interval-example')
+});

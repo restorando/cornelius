@@ -2,9 +2,6 @@
  * Cornelius library v0.1
  * http://restorando.github.io/cornelius
  *
- * Includes Sizzle.js
- * http://sizzlejs.com/
- *
  * Copyright (c) 2013 Restorando
  * Released under the MIT license
  *
@@ -97,7 +94,12 @@
         return date.getYear() + 1900;
     }
 
-    var draw = function(initialDate, cohort, container, config) {
+    var draw = function(cornelius, cohort, container) {
+        if (!cohort)    throw new Error ("Please provide the cohort data");
+        if (!container) throw new Error ("Please provide the cohort container");
+
+        var config = cornelius.config,
+            initialDate = cornelius.initialDate;
 
         function create(el, options) {
             options = options || {};
@@ -257,13 +259,6 @@
         this.config = extend({}, Cornelius.getDefaults(), opts || {});
     };
 
-    Cornelius.prototype.draw = function(cohort, container) {
-        if (!cohort)    throw new Error ("Please provide the cohort data");
-        if (!container) throw new Error ("Please provide the cohort container");
-
-        draw(this.initialDate, cohort, container, this.config);
-    };
-
     extend(Cornelius, {
         getDefaults: function() {
             return defaults;
@@ -278,8 +273,8 @@
         },
         draw: function(options) {
             var cornelius = new Cornelius(options);
-            cornelius.draw(options.cohort, options.container);
-            return cornelius;
+            draw(cornelius, options.cohort, options.container);
+            return options.container;
         }
     });
 

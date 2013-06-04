@@ -1,5 +1,9 @@
-new Cornelius(initialDate, {
+Cornelius.draw({
   formatHeaderLabel: function(i) {
     return i * 2;
-  }
-}).draw(data, document.getElementById('format-header-example'));;
+  },
+
+  initialDate: initialDate,
+  cohort: data,
+  container: document.getElementById('format-header-example')
+});
