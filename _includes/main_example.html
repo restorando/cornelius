@@ -14,5 +14,9 @@
   // DOM Element where the Cohort Chart will be inserted
   container = document.getElementById('main-example');
 
-  new Cornelius(initialDate).draw(data, container);
+  Cornelius.draw({
+    initialDate: initialDate,
+    container: container,
+    cohort: data
+  });
 </script>

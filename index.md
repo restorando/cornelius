@@ -35,6 +35,34 @@ var cornelius = new Cornelius( new Date(2012, 06), [options] );
 cornelius.draw(data, container);
 {% endhighlight %}
 
+## Quick draw
+
+The easiest way to draw a chart is to use the `draw` class method:
+
+{% highlight javascript %}
+Cornelius.draw({
+
+  // required params
+
+  initialDate: new Date(2013, 03),
+
+  container: document.getElementById('my-container'),
+
+  cohort: [
+    [1973,1000,750,300,400,70,20],
+    [1268,549,336,221,122,115],
+    [1892,1282,250,32,18],
+    [1832,379,254,314],
+    [1171,256,120],
+    [2533,340]
+  ],
+
+  /* any other options */
+
+  timeInterval: 'weekly'
+});
+{% endhighlight %}
+
 ## Constructor
 
 The first parameter the constructor takes is a `Date` object which will be used as the initial date
@@ -211,6 +239,24 @@ Example:
 {% include format_date_example.html %}
 </script>
 
+# Trimming the table
+
+If your cohort data is too large and want only to display the first Ncolumns or the last M rows, you
+can use the `maxRows` and `maxColumns` properties.
+
+Example:
+
+{% highlight javascript %}
+{% include trimming_example.html %}
+{% endhighlight %}
+
+<div id="trimming-example"></div>
+
+<script type="text/javascript">
+{% include trimming_example.html %}
+</script>
+
+
 # Default options
 
 One instance of Cornelius can be used to draw multiple charts using the same options. You can also set
@@ -237,6 +283,11 @@ Cornelius doesn't have `jQuery` as a dependency. But if you have it already, you
 {% highlight javascript %}
 $("#container").cornelius({
   initialDate: new Date(2013, 1),
+  // cohort data
+  cohort: [
+    [100, 30, 23, 10],
+    [399, 23, 10, 40]
+  ],
   timeInterval: 'daily',
   /* ... other options ... */
 });

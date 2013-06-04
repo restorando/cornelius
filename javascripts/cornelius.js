@@ -1,3 +1,16 @@
+/*!
+ * Cornelius library v0.1
+ * http://restorando.github.io/cornelius
+ *
+ * Includes Sizzle.js
+ * http://sizzlejs.com/
+ *
+ * Copyright (c) 2013 Restorando
+ * Released under the MIT license
+ *
+ * Date: 2013-06-04
+ */
+
 ;(function(globals) {
     var corneliusDefaults = {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
@@ -33,7 +46,7 @@
         classPrefix: 'cornelius-',
 
         formatHeaderLabel: function(i) {
-            return i === 0 ? this.labels.people : (this.initialIntervalNumber - 1 + i).toString();
+            return (this.initialIntervalNumber - 1 + i).toString();
         },
 
         formatDailyLabel: function(date, i) {
@@ -107,6 +120,9 @@
             return el;
         }
 
+
+        // prefix any css class we use in order to avoid any possible clashes
+
         function prefixClass(className) {
             var prefixedClass = [],
                 classes = className.split(/\s+/);
@@ -125,7 +141,8 @@
 
             for (var i = 0; i < monthLength; i++) {
                 if (i > config.maxColumns) break;
-                th.appendChild(create('th', { text: config.formatHeaderLabel(i), className: 'people' }));
+                var text = i === 0 ? config.labels.people : config.formatHeaderLabel(i);
+                th.appendChild(create('th', { text: text, className: 'people' }));
             }
             return th;
         }
@@ -232,8 +249,9 @@
         container.appendChild(mainContainer);
     };
 
-    var Cornelius = function(initialDate, opts) {
-        if (!initialDate) throw new Error('The initialDate is a required argument');
+    var Cornelius = function(opts) {
+        if (!(initialDate = opts.initialDate)) throw new Error('The initialDate is a required argument');
+        delete opts.initialDate;
 
         this.initialDate = initialDate;
         this.config = extend({}, Cornelius.getDefaults(), opts || {});
@@ -257,16 +275,24 @@
 
         resetDefaults: function() {
             defaults = corneliusDefaults;
+        },
+        draw: function(options) {
+            var cornelius = new Cornelius(options);
+            cornelius.draw(options.cohort, options.container);
+            return cornelius;
         }
     });
 
     if (typeof jQuery !== "undefined" && jQuery !== null) {
         jQuery.fn.cornelius = function(options) {
             return this.each(function() {
-                return new Cornelius(options).draw(options.cohort, this);
+                options.container = this;
+                return Cornelius.draw(options);
             });
         };
     }
+
+    // show it to the world!!
 
     if (globals.exports) {
         globals.exports = Cornelius;
