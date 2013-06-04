@@ -155,10 +155,17 @@ a.button small {
 }
 header a.button {
   position: absolute;
-  right: 0;
+  right: 30px;
   top: 0;
   background: transparent url(../images/github-button.png) 0 0 no-repeat;
 }
+
+.inner iframe {
+  position: absolute;
+  right: 58px;
+  bottom: 38px;
+}
+
 aside a.button {
   width: 138px;
   padding-left: 64px;

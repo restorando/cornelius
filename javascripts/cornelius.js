@@ -29,12 +29,12 @@
 
         rawNumberOnHover: true,
 
-        initialMonth: 1,
+        initialIntervalNumber: 1,
 
         classPrefix: 'cornelius-',
 
         formatHeaderLabel: function(i) {
-            return i === 0 ? this.labels.people : (this.initialMonth - 1 + i).toString();
+            return i === 0 ? this.labels.people : (this.initialIntervalNumber - 1 + i).toString();
         },
 
         formatDailyLabel: function(date, i) {
