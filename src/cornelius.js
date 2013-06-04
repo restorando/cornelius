@@ -249,8 +249,9 @@
         container.appendChild(mainContainer);
     };
 
-    var Cornelius = function(initialDate, opts) {
-        if (!initialDate) throw new Error('The initialDate is a required argument');
+    var Cornelius = function(opts) {
+        if (!(initialDate = opts.initialDate)) throw new Error('The initialDate is a required argument');
+        delete opts.initialDate;
 
         this.initialDate = initialDate;
         this.config = extend({}, Cornelius.getDefaults(), opts || {});
@@ -274,13 +275,19 @@
 
         resetDefaults: function() {
             defaults = corneliusDefaults;
+        },
+        draw: function(options) {
+            var cornelius = new Cornelius(options);
+            cornelius.draw(options.cohort, options.container);
+            return cornelius;
         }
     });
 
     if (typeof jQuery !== "undefined" && jQuery !== null) {
         jQuery.fn.cornelius = function(options) {
             return this.each(function() {
-                return new Cornelius(options).draw(options.cohort, this);
+                options.container = this;
+                return Cornelius.draw(options);
             });
         };
     }

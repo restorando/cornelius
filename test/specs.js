@@ -9,14 +9,16 @@ describe('Cornelius', function() {
     [600,340]
   ],
 
-  Cornelius = require('cornelius'),
+  $ = jQuery = require('jquery'),
 
-  $ = require('jquery'),
+  Cornelius = require('cornelius'),
 
   $container;
 
   function draw(options, initialDate, cohort) {
-    var cornelius = new Cornelius(initialDate || new Date(2012, 9), options || {});
+    options = options || {};
+    options.initialDate = options.initialDate || new Date(2012, 9);
+    var cornelius = new Cornelius(options);
     $container = $("<div/>");
 
     cornelius.draw(cohort || data, $container.get(0));
@@ -186,6 +188,30 @@ describe('Cornelius', function() {
         draw({title: 'Cornelius Demo'});
         $container.find('.cornelius-title').text().should.equal('Cornelius Demo');
       });
+    });
+  });
+
+  describe("Alternative constructos", function() {
+    it("accepts a convenient shortcut constructor", function() {
+      var $container = $('<div/>');
+
+      Cornelius.draw({
+        cohort: data,
+        initialDate: new Date(2011, 3),
+        container: $container.get(0)
+      });
+
+      $container.find('td').should.have.length(48);
+    });
+
+    it("can be instantiated via jQuery", function() {
+      var $container = $('<div/>');
+      $container.cornelius({
+        cohort: data,
+        initialDate: new Date(2011, 3)
+      });
+
+      $container.find('td').should.have.length(48);
     });
   });
 });
