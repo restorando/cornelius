@@ -33,7 +33,7 @@
         classPrefix: 'cornelius-',
 
         formatHeaderLabel: function(i) {
-            return i === 0 ? this.labels.people : (this.initialIntervalNumber - 1 + i).toString();
+            return (this.initialIntervalNumber - 1 + i).toString();
         },
 
         formatDailyLabel: function(date, i) {
@@ -128,7 +128,8 @@
 
             for (var i = 0; i < monthLength; i++) {
                 if (i > config.maxColumns) break;
-                th.appendChild(create('th', { text: config.formatHeaderLabel(i), className: 'people' }));
+                var text = i === 0 ? config.labels.people : config.formatHeaderLabel(i);
+                th.appendChild(create('th', { text: text, className: 'people' }));
             }
             return th;
         }

@@ -12,7 +12,11 @@
     "restorando"
   ],
   "dependencies": {},
-  "development": {},
+  "development": {
+    "chaijs/chai": "*",
+    "visionmedia/mocha": "*",
+    "component/jquery": "*"
+  },
   "license": "MIT",
   "main": "index.js",
   "scripts": [

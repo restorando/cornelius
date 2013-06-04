@@ -1,9 +1,9 @@
 
 build: components index.js
-	@component build
+	@component build --dev
 
 components: component.json
-	@component install
+	@component install --dev
 
 clean:
 	rm -fr build components
