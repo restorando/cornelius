@@ -15,14 +15,14 @@ describe('Cornelius', function() {
 
   $container;
 
-  function draw(options, initialDate, cohort) {
-    options = options || {};
-    options.initialDate = options.initialDate || new Date(2012, 9);
-    var cornelius = new Cornelius(options);
+  function draw(options) {
     $container = $("<div/>");
 
-    cornelius.draw(cohort || data, $container.get(0));
-    return cornelius;
+    options = options || {};
+    options.initialDate = new Date(2012, 9);
+    options.cohort = data;
+    options.container = $container.get(0);
+    return Cornelius.draw(options);
   }
 
   function columnLabels() {
