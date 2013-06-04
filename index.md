@@ -3,15 +3,13 @@ layout: default
 title: Cornelius
 ---
 
-# Introduction
-
-**Cornelius** allows you to draw Cohort Charts like this:
+**Cornelius** can draw a Cohort Charts like this for you:
 
 <div id="main-example"></div>
 
 {% include main_example.html %}
 
-Writing only this code:
+Only with this code:
 
 {% highlight html %}
 {% include main_example.html %}
@@ -19,7 +17,7 @@ Writing only this code:
 
 # Installation
 
-Just include the javascript and stylesheet files and you are ready to go.
+Just include the javascript and stylesheet files and you are ready to go. No jQuery needed, dependency free.
 
 {% highlight html %}
 <link rel="stylesheet" type="text/css" href="cornelius.css" />
@@ -226,4 +224,16 @@ Cornelius.getDefaults(); // { ..., initialIntervalNumber: 0, timeInterval: 'week
 Cornelius.resetDefaults();
 
 Cornelius.getDefaults(); // { ..., initialIntervalNumber: 1, timeInterval: 'monthly', ... }
+{% endhighlight %}
+
+# jQuery plugin
+
+Cornelius doesn't have `jQuery` as a dependency. But if you have it already, you can use the jQuery helper:
+
+{% highlight javascript %}
+$("#container").cornelius({
+  initialDate: new Date(2013, 1),
+  timeInterval: 'daily',
+  /* ... other options ... */
+});
 {% endhighlight %}
