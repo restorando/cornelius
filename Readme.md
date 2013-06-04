@@ -15,6 +15,19 @@ Otherwise just include the `css` and `js` files.
 
 You can read the full documentation in <http://restorando.github.io/cornelius>
 
+## Running the tests
+
+* Install component
+
+        $ npm install -g component
+
+* Compile the source and specs
+
+        $ make
+
+* Open the test runner in a browser
+
+        $ open test/index.html
 
 ## License
 
@@ -40,4 +53,3 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
