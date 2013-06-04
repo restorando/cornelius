@@ -1,3 +1,16 @@
+/*!
+ * Cornelius library v0.1
+ * http://restorando.github.io/cornelius
+ *
+ * Includes Sizzle.js
+ * http://sizzlejs.com/
+ *
+ * Copyright (c) 2013 Restorando
+ * Released under the MIT license
+ *
+ * Date: 2013-06-04
+ */
+
 ;(function(globals) {
     var corneliusDefaults = {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
