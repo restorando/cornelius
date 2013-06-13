@@ -110,9 +110,15 @@
                 delete options.className;
                 el.className = prefixClass(className);
             }
-            if (!isEmpty(textContent = options.text)) {
+            if (!isEmpty(options.text)) {
+                var text = options.text.toString();
+
+                if (document.all) {
+                    el.innerText = text;
+                } else {
+                    el.textContent = text;
+                }
                 delete options.text;
-                el.textContent = textContent.toString();
             }
 
             for (var option in options) {
@@ -209,7 +215,7 @@
 
                 tr.appendChild(create('td', {
                     className: 'label',
-                    textContent: formatTimeLabel(initialDate, config.timeInterval, i)
+                    text: formatTimeLabel(initialDate, config.timeInterval, i)
                 }));
 
                 for (var j = 0; j < data[0].length; j++) {
