@@ -91,7 +91,7 @@
     }
 
     function getYear(date) {
-        return date.getYear() + 1900;
+        return date.getFullYear ? date.getFullYear() : date.getYear() + 1900;
     }
 
     var draw = function(cornelius, cohort, container) {
