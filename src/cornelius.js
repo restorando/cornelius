@@ -108,6 +108,14 @@
         }
     }
 
+    function setText(element, text) {
+        if (document.all) {
+            element.innerText = text;
+        } else {
+            element.textContent = text;
+        }
+    }
+
     var draw = function(cornelius, cohort, container) {
         if (!cohort)    throw new Error ("Please provide the cohort data");
         if (!container) throw new Error ("Please provide the cohort container");
@@ -126,12 +134,8 @@
             }
             if (!isEmpty(options.text)) {
                 var text = options.text.toString();
+                setText(el, text);
 
-                if (document.all) {
-                    el.innerText = text;
-                } else {
-                    el.textContent = text;
-                }
                 delete options.text;
             }
 
@@ -276,8 +280,11 @@
           var table = opts.container.getElementsByTagName('table')[0];
 
           for (var rowIndex = 0; rowIndex < opts.cohort.length; rowIndex++) {
+            var tr = table.children[rowIndex + 1];
             for (var cellIndex = 1; cellIndex < opts.cohort[rowIndex].length; cellIndex++) {
-                table.children[rowIndex + 1].children[cellIndex + 1].innerHTML = formatValue(opts.cohort[rowIndex][cellIndex], opts.cohort[rowIndex][0], this.valueType);
+                var td = tr.children[cellIndex + 1];
+                var toggledValue = formatValue(opts.cohort[rowIndex][cellIndex], opts.cohort[rowIndex][0], this.valueType);
+                setText(td, toggledValue);
             }
           }
         }
