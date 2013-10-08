@@ -139,6 +139,30 @@ describe('Cornelius', function() {
 
   });
 
+  describe("Values", function() {
+
+    var expectedValues = [
+      ["700", "600", "500", "400", "70", "20"],
+      ["549", "336", "221", "122", "115"],
+      ["882", "250", "32", "18"],
+      ["379", "254", "314"],
+      ["256", "120"],
+      ["340"]
+    ];
+
+    it("renders the absolute values on toggle", function() {
+      var cornelius = draw();
+
+      cornelius.toggleValues();
+
+      $container.find('tr:not(:first)').each(function(i, el){
+        var values = $(el).find('.cornelius-percentage').map(function() { return this.textContent; }).get();
+        values.should.deep.equal(expectedValues[i]);
+      });
+    });
+
+  });
+
   describe("Options", function() {
 
     describe("Slicing", function() {
@@ -191,7 +215,7 @@ describe('Cornelius', function() {
     });
   });
 
-  describe("Alternative constructos", function() {
+  describe("Alternative constructors", function() {
     it("accepts a convenient shortcut constructor", function() {
       var $container = $('<div/>');
 

@@ -9,6 +9,10 @@
  */
 
 ;(function(globals) {
+    /* Constants for setting the data type to be displayed in the cells */
+    var TYPE_PERCENTAGE = 'percentage';
+    var TYPE_VALUE = 'value';
+
     var corneliusDefaults = {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                      'August', 'September', 'October', 'November', 'December'],
@@ -92,6 +96,14 @@
 
     function getYear(date) {
         return date.getFullYear ? date.getFullYear() : date.getYear() + 1900;
+    }
+
+    function formatPercentage(value, base) {
+        if (isNumber(value) && base > 0) {
+            return (value / base * 100).toFixed(2);
+        } else if (isNumber(value)) {
+            return "0.00";
+        }
     }
 
     var draw = function(cornelius, cohort, container) {
@@ -179,14 +191,6 @@
 
                 startMonth = config.maxRows ? data.length - config.maxRows : 0,
 
-                formatPercentage = function(value, base) {
-                    if (isNumber(value) && base > 0) {
-                        return (value / base * 100).toFixed(2);
-                    } else if (isNumber(value)) {
-                        return "0.00";
-                    }
-                },
-
                 classNameFor = function(value) {
                     var levels = config.repeatLevels,
                         floatValue = value && parseFloat(value),
@@ -262,7 +266,18 @@
         delete opts.initialDate;
 
         this.initialDate = initialDate;
+        this.valueType = 'percentage';
         this.config = extend({}, Cornelius.getDefaults(), opts || {});
+
+        this.toggleValues = function() {
+          var table = opts.container.getElementsByTagName('table')[0];
+
+          for (var rowIndex = 0; rowIndex < opts.cohort.length; rowIndex++) {
+            for (var cellIndex = 1; cellIndex < opts.cohort[rowIndex].length; cellIndex++) {
+                table.children[rowIndex + 1].children[cellIndex + 1].innerHTML = opts.cohort[rowIndex][cellIndex];
+            }
+          }
+        }
     };
 
     extend(Cornelius, {
@@ -280,7 +295,7 @@
         draw: function(options) {
             var cornelius = new Cornelius(options);
             draw(cornelius, options.cohort, options.container);
-            return options.container;
+            return cornelius;
         }
     });
 
@@ -294,7 +309,6 @@
     }
 
     // show it to the world!!
-
     if (globals.exports) {
         globals.exports = Cornelius;
     } else {
