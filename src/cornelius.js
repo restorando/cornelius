@@ -116,6 +116,28 @@
         }
     }
 
+    function addClass(element, className) {
+        if (!new RegExp(className).test(element.className)) {
+            element.className += ' ' + className;
+        }
+    }
+
+    function removeClass(element, className) {
+        element.className = element.className.replace(className, '');
+    }
+
+    // prefix any css class we use in order to avoid any possible clashes
+    function prefixClass(className, classPrefix) {
+        var prefixedClass = [],
+            classes = className.split(/\s+/);
+
+        for (var i in classes) {
+            prefixedClass.push(classPrefix + classes[i]);
+        }
+
+        return prefixedClass.join(" ");
+    }
+
     var draw = function(cornelius, cohort, container) {
         if (!cohort)    throw new Error ("Please provide the cohort data");
         if (!container) throw new Error ("Please provide the cohort container");
@@ -130,7 +152,7 @@
 
             if ((className = options.className)) {
                 delete options.className;
-                el.className = prefixClass(className);
+                el.className = prefixClass(className, config.classPrefix);
             }
             if (!isEmpty(options.text)) {
                 var text = options.text.toString();
@@ -144,19 +166,6 @@
             }
 
             return el;
-        }
-
-
-        // prefix any css class we use in order to avoid any possible clashes
-
-        function prefixClass(className) {
-            var prefixedClass = [],
-                classes = className.split(/\s+/);
-
-            for (var i in classes) {
-                prefixedClass.push(config.classPrefix + classes[i]);
-            }
-            return prefixedClass.join(" ");
         }
 
         function drawHeader(data) {
@@ -285,6 +294,11 @@
                 var td = tr.children[cellIndex + 1];
                 var toggledValue = formatValue(opts.cohort[rowIndex][cellIndex], opts.cohort[rowIndex][0], this.valueType);
                 setText(td, toggledValue);
+                if (this.valueType == TYPE_ABSOLUTE) {
+                    removeClass(td, prefixClass('percentage', this.config.classPrefix));
+                } else {
+                    addClass(td, prefixClass('percentage', this.config.classPrefix));
+                }
             }
           }
         }
