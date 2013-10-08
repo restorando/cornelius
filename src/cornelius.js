@@ -11,7 +11,7 @@
 ;(function(globals) {
     /* Constants for setting the data type to be displayed in the cells */
     var TYPE_PERCENTAGE = 'percentage';
-    var TYPE_VALUE = 'value';
+    var TYPE_ABSOLUTE = 'absolute';
 
     var corneliusDefaults = {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
@@ -98,8 +98,10 @@
         return date.getFullYear ? date.getFullYear() : date.getYear() + 1900;
     }
 
-    function formatPercentage(value, base) {
-        if (isNumber(value) && base > 0) {
+    function formatValue(value, base, valueType) {
+        if (valueType == TYPE_ABSOLUTE) {
+            return value;
+        } else if (isNumber(value) && base > 0) {
             return (value / base * 100).toFixed(2);
         } else if (isNumber(value)) {
             return "0.00";
@@ -226,7 +228,7 @@
                     if (j > config.maxColumns) break;
 
                     var value = row[j],
-                        cellValue = j === 0 ? value : formatPercentage(value, baseValue),
+                        cellValue = j === 0 ? value : formatValue(value, baseValue, TYPE_PERCENTAGE),
                         opts = {};
 
                         if (!isEmpty(cellValue)) {
@@ -266,15 +268,16 @@
         delete opts.initialDate;
 
         this.initialDate = initialDate;
-        this.valueType = 'percentage';
+        this.valueType = TYPE_PERCENTAGE;
         this.config = extend({}, Cornelius.getDefaults(), opts || {});
 
         this.toggleValues = function() {
+          this.valueType = this.valueType == TYPE_PERCENTAGE ? TYPE_ABSOLUTE : TYPE_PERCENTAGE
           var table = opts.container.getElementsByTagName('table')[0];
 
           for (var rowIndex = 0; rowIndex < opts.cohort.length; rowIndex++) {
             for (var cellIndex = 1; cellIndex < opts.cohort[rowIndex].length; cellIndex++) {
-                table.children[rowIndex + 1].children[cellIndex + 1].innerHTML = opts.cohort[rowIndex][cellIndex];
+                table.children[rowIndex + 1].children[cellIndex + 1].innerHTML = formatValue(opts.cohort[rowIndex][cellIndex], opts.cohort[rowIndex][0], this.valueType);
             }
           }
         }
