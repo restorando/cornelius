@@ -99,7 +99,7 @@
     }
 
     function formatValue(value, base, valueType) {
-        if (valueType == TYPE_ABSOLUTE) {
+        if (valueType === TYPE_ABSOLUTE) {
             return value;
         } else if (isNumber(value) && base > 0) {
             return (value / base * 100).toFixed(2);
@@ -285,23 +285,24 @@
         this.config = extend({}, Cornelius.getDefaults(), opts || {});
 
         this.toggleValues = function() {
-          this.valueType = this.valueType == TYPE_PERCENTAGE ? TYPE_ABSOLUTE : TYPE_PERCENTAGE
-          var table = opts.container.getElementsByTagName('table')[0];
+            this.valueType = this.valueType === TYPE_PERCENTAGE ? TYPE_ABSOLUTE : TYPE_PERCENTAGE;
+            var table = opts.container.getElementsByTagName('table')[0];
 
-          for (var rowIndex = 0; rowIndex < opts.cohort.length; rowIndex++) {
-            var tr = table.children[rowIndex + 1];
-            for (var cellIndex = 1; cellIndex < opts.cohort[rowIndex].length; cellIndex++) {
-                var td = tr.children[cellIndex + 1];
-                var toggledValue = formatValue(opts.cohort[rowIndex][cellIndex], opts.cohort[rowIndex][0], this.valueType);
-                setText(td, toggledValue);
-                if (this.valueType == TYPE_ABSOLUTE) {
-                    removeClass(td, prefixClass('percentage', this.config.classPrefix));
-                } else {
-                    addClass(td, prefixClass('percentage', this.config.classPrefix));
+            for (var rowIndex = 0; rowIndex < opts.cohort.length; rowIndex++) {
+                var tr = table.children[rowIndex + 1];
+
+                for (var cellIndex = 1; cellIndex < opts.cohort[rowIndex].length; cellIndex++) {
+                    var td = tr.children[cellIndex + 1];
+                    var toggledValue = formatValue(opts.cohort[rowIndex][cellIndex], opts.cohort[rowIndex][0], this.valueType);
+                    setText(td, toggledValue);
+                    if (this.valueType === TYPE_ABSOLUTE) {
+                        removeClass(td, prefixClass('percentage', this.config.classPrefix));
+                    } else {
+                        addClass(td, prefixClass('percentage', this.config.classPrefix));
+                    }
                 }
             }
-          }
-        }
+        };
     };
 
     extend(Cornelius, {

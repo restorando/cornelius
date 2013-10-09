@@ -119,6 +119,7 @@ describe('Cornelius', function() {
   });
 
   describe("Toggle", function() {
+
     var expectedPercentageValues = [
         ["70.00", "60.00", "50.00", "40.00", "7.00", "2.00"],
         ["45.75", "28.00", "18.42", "10.17", "9.58"],
@@ -137,29 +138,32 @@ describe('Cornelius', function() {
       ];
 
     describe("Percentages", function() {
-      it("renders the percentage values", function() {
-        draw();
-        $container.find('tr:not(:first)').each(function(i, el){
-          var values = $(el).find('.cornelius-percentage').map(function() { return this.textContent; }).get();
-          values.should.deep.equal(expectedPercentageValues[i]);
+
+        it("renders the percentage values", function() {
+            draw();
+            $container.find('tr:not(:first)').each(function(i, el){
+              var values = $(el).find('.cornelius-percentage').map(function() { return this.textContent; }).get();
+              values.should.deep.equal(expectedPercentageValues[i]);
+            });
         });
-      });
     });
 
     describe("Absolutes", function() {
-      it("renders the absolute values on toggle", function() {
-        var cornelius = draw();
 
-        cornelius.toggleValues();
+        it("renders the absolute values on toggle", function() {
+            var cornelius = draw();
 
-        $container.find('tr:not(:first)').each(function(i, el){
-          var values = $(el).find('td:gt(1):not(.cornelius-empty)').map(function() { return this.textContent; }).get();
-          values.should.deep.equal(expectedAbsoluteValues[i]);
+            cornelius.toggleValues();
+
+            $container.find('tr:not(:first)').each(function(i, el){
+              var values = $(el).find('td:gt(1):not(.cornelius-empty)').map(function() { return this.textContent; }).get();
+              values.should.deep.equal(expectedAbsoluteValues[i]);
+            });
         });
-      });
     });
 
     describe("Toggle back", function() {
+
         it("renders the percentage after toggling back", function() {
             var cornelius = draw();
 
