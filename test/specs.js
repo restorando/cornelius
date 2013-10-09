@@ -118,26 +118,67 @@ describe('Cornelius', function() {
     });
   });
 
-  describe("Percentages", function() {
+  describe("Toggle", function() {
 
-    var expectedValues = [
-      ["70.00", "60.00", "50.00", "40.00", "7.00", "2.00"],
-      ["45.75", "28.00", "18.42", "10.17", "9.58"],
-      ["98.00", "27.78", "3.56", "2.00"],
-      ["75.80", "50.80", "62.80"],
-      ["64.00", "30.00"],
-      ["56.67"]
-    ];
+    var expectedPercentageValues = [
+        ["70.00", "60.00", "50.00", "40.00", "7.00", "2.00"],
+        ["45.75", "28.00", "18.42", "10.17", "9.58"],
+        ["98.00", "27.78", "3.56", "2.00"],
+        ["75.80", "50.80", "62.80"],
+        ["64.00", "30.00"],
+        ["56.67"]
+      ],
+    expectedAbsoluteValues = [
+        ["700", "600", "500", "400", "70", "20"],
+        ["549", "336", "221", "122", "115"],
+        ["882", "250", "32", "18"],
+        ["379", "254", "314"],
+        ["256", "120"],
+        ["340"]
+      ];
 
-    it("renders the percentage values", function() {
-      draw();
-      $container.find('tr:not(:first)').each(function(i, el){
-        var values = $(el).find('.cornelius-percentage').map(function() { return this.textContent; }).get();
-        values.should.deep.equal(expectedValues[i]);
-      });
+    describe("Percentages", function() {
+
+        it("renders the percentage values", function() {
+            draw();
+            $container.find('tr:not(:first)').each(function(i, el){
+              var values = $(el).find('.cornelius-percentage').map(function() { return this.textContent; }).get();
+              values.should.deep.equal(expectedPercentageValues[i]);
+            });
+        });
     });
 
-  });
+    describe("Absolutes", function() {
+
+        it("renders the absolute values on toggle", function() {
+            var cornelius = draw();
+
+            cornelius.toggleValues();
+
+            $container.find('tr:not(:first)').each(function(i, el){
+              var values = $(el).find('td:gt(1):not(.cornelius-empty)').map(function() { return this.textContent; }).get();
+              values.should.deep.equal(expectedAbsoluteValues[i]);
+            });
+        });
+    });
+
+    describe("Toggle back", function() {
+
+        it("renders the percentage after toggling back", function() {
+            var cornelius = draw();
+
+            cornelius.toggleValues();
+
+            cornelius.toggleValues();
+
+            $container.find('tr:not(:first)').each(function(i, el){
+              var values = $(el).find('td:gt(1):not(.cornelius-empty)').map(function() { return this.textContent; }).get();
+              values.should.deep.equal(expectedPercentageValues[i]);
+            });
+        });
+    });
+  })
+
 
   describe("Options", function() {
 
@@ -191,7 +232,7 @@ describe('Cornelius', function() {
     });
   });
 
-  describe("Alternative constructos", function() {
+  describe("Alternative constructors", function() {
     it("accepts a convenient shortcut constructor", function() {
       var $container = $('<div/>');
 

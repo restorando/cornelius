@@ -9,6 +9,10 @@
  */
 
 ;(function(globals) {
+    /* Constants for setting the data type to be displayed in the cells */
+    var TYPE_PERCENTAGE = 'percentage';
+    var TYPE_ABSOLUTE = 'absolute';
+
     var corneliusDefaults = {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                      'August', 'September', 'October', 'November', 'December'],
@@ -94,6 +98,46 @@
         return date.getFullYear ? date.getFullYear() : date.getYear() + 1900;
     }
 
+    function formatValue(value, base, valueType) {
+        if (valueType === TYPE_ABSOLUTE) {
+            return value;
+        } else if (isNumber(value) && base > 0) {
+            return (value / base * 100).toFixed(2);
+        } else if (isNumber(value)) {
+            return "0.00";
+        }
+    }
+
+    function setText(element, text) {
+        if (document.all) {
+            element.innerText = text;
+        } else {
+            element.textContent = text;
+        }
+    }
+
+    function addClass(element, className) {
+        if (!new RegExp(className).test(element.className)) {
+            element.className += ' ' + className;
+        }
+    }
+
+    function removeClass(element, className) {
+        element.className = element.className.replace(className, '');
+    }
+
+    // prefix any css class we use in order to avoid any possible clashes
+    function prefixClass(className, classPrefix) {
+        var prefixedClass = [],
+            classes = className.split(/\s+/);
+
+        for (var i in classes) {
+            prefixedClass.push(classPrefix + classes[i]);
+        }
+
+        return prefixedClass.join(" ");
+    }
+
     var draw = function(cornelius, cohort, container) {
         if (!cohort)    throw new Error ("Please provide the cohort data");
         if (!container) throw new Error ("Please provide the cohort container");
@@ -108,16 +152,12 @@
 
             if ((className = options.className)) {
                 delete options.className;
-                el.className = prefixClass(className);
+                el.className = prefixClass(className, config.classPrefix);
             }
             if (!isEmpty(options.text)) {
                 var text = options.text.toString();
+                setText(el, text);
 
-                if (document.all) {
-                    el.innerText = text;
-                } else {
-                    el.textContent = text;
-                }
                 delete options.text;
             }
 
@@ -126,19 +166,6 @@
             }
 
             return el;
-        }
-
-
-        // prefix any css class we use in order to avoid any possible clashes
-
-        function prefixClass(className) {
-            var prefixedClass = [],
-                classes = className.split(/\s+/);
-
-            for (var i in classes) {
-                prefixedClass.push(config.classPrefix + classes[i]);
-            }
-            return prefixedClass.join(" ");
         }
 
         function drawHeader(data) {
@@ -179,14 +206,6 @@
 
                 startMonth = config.maxRows ? data.length - config.maxRows : 0,
 
-                formatPercentage = function(value, base) {
-                    if (isNumber(value) && base > 0) {
-                        return (value / base * 100).toFixed(2);
-                    } else if (isNumber(value)) {
-                        return "0.00";
-                    }
-                },
-
                 classNameFor = function(value) {
                     var levels = config.repeatLevels,
                         floatValue = value && parseFloat(value),
@@ -222,7 +241,7 @@
                     if (j > config.maxColumns) break;
 
                     var value = row[j],
-                        cellValue = j === 0 ? value : formatPercentage(value, baseValue),
+                        cellValue = j === 0 ? value : formatValue(value, baseValue, TYPE_PERCENTAGE),
                         opts = {};
 
                         if (!isEmpty(cellValue)) {
@@ -262,7 +281,28 @@
         delete opts.initialDate;
 
         this.initialDate = initialDate;
+        this.valueType = TYPE_PERCENTAGE;
         this.config = extend({}, Cornelius.getDefaults(), opts || {});
+
+        this.toggleValues = function() {
+            this.valueType = this.valueType === TYPE_PERCENTAGE ? TYPE_ABSOLUTE : TYPE_PERCENTAGE;
+            var table = opts.container.getElementsByTagName('table')[0];
+
+            for (var rowIndex = 0; rowIndex < opts.cohort.length; rowIndex++) {
+                var tr = table.children[rowIndex + 1];
+
+                for (var cellIndex = 1; cellIndex < opts.cohort[rowIndex].length; cellIndex++) {
+                    var td = tr.children[cellIndex + 1];
+                    var toggledValue = formatValue(opts.cohort[rowIndex][cellIndex], opts.cohort[rowIndex][0], this.valueType);
+                    setText(td, toggledValue);
+                    if (this.valueType === TYPE_ABSOLUTE) {
+                        removeClass(td, prefixClass('percentage', this.config.classPrefix));
+                    } else {
+                        addClass(td, prefixClass('percentage', this.config.classPrefix));
+                    }
+                }
+            }
+        };
     };
 
     extend(Cornelius, {
@@ -280,7 +320,7 @@
         draw: function(options) {
             var cornelius = new Cornelius(options);
             draw(cornelius, options.cohort, options.container);
-            return options.container;
+            return cornelius;
         }
     });
 
@@ -294,7 +334,6 @@
     }
 
     // show it to the world!!
-
     if (globals.exports) {
         globals.exports = Cornelius;
     } else {
