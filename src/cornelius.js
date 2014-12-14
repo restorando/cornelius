@@ -38,6 +38,8 @@
 
         rawNumberOnHover: true,
 
+        displayAbsoluteValue: false,
+
         initialIntervalNumber: 1,
 
         classPrefix: 'cornelius-',
@@ -192,7 +194,7 @@
                         floatValue = value && parseFloat(value),
                         highestLevel = null;
 
-                    var classNames = ['percentage'];
+                    var classNames = [config.displayAbsoluteValue ? 'absolute' : 'percentage'];
 
                     for (var level in levels) {
                         if (floatValue >= levels[level][0] && floatValue < levels[level][1]) {
@@ -222,14 +224,14 @@
                     if (j > config.maxColumns) break;
 
                     var value = row[j],
-                        cellValue = j === 0 ? value : formatPercentage(value, baseValue),
+                        cellValue = j === 0 || config.displayAbsoluteValue ? value : formatPercentage(value, baseValue),
                         opts = {};
 
                         if (!isEmpty(cellValue)) {
                             opts = {
                                 text: cellValue,
                                 title: j > 0 && config.rawNumberOnHover ? value : null,
-                                className: j === 0 ? 'people' : classNameFor(cellValue)
+                                className: j === 0 ? 'people' : classNameFor(formatPercentage(value, baseValue))
                             };
                         } else if (config.drawEmptyCells) {
                             opts = { text: '-', className: 'empty' };
