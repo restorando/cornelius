@@ -153,6 +153,12 @@ If `rawNumberOnHover` is set to true, it will display the raw number while leavi
 
 Default: `true`
 
+## displayAbsoluteValue
+
+If `displayAbsoluteValue` is set to true, absolute values will be displayed in stead of the percentage value.
+
+Default: `false`
+
 ## initialIntervalNumber
 
 This property will allow you to specify the initial number that will be displayed in the first column header.
