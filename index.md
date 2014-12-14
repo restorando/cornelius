@@ -155,7 +155,7 @@ Default: `true`
 
 ## displayAbsoluteValue
 
-If `displayAbsoluteValue` is set to true, absolute values will be displayed in stead of the percentage value.
+If `displayAbsoluteValue` is set to true, absolute values will be displayed instead of the percentage value.
 
 Default: `false`
 
