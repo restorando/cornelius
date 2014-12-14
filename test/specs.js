@@ -140,22 +140,14 @@ describe('Cornelius', function() {
 
   describe("Absolute numbers", function() {
 
-    var expectedValues = [
-      [1000,700,600,500,400,70,20],
-      [1200,549,336,221,122,115],
-      [900,882,250,32,18],
-      [500,379,254,314],
-      [400,256,120],
-      [600,340]
-    ];
-
     it("renders the absolute values", function() {
-        draw({displayAbsoluteValue: true});
+      draw({displayAbsoluteValue: true});
       $container.find('tr:not(:first)').each(function(i, el){
         var values = $(el).find('.cornelius-absolute').map(function() { return this.textContent; }).get();
-        values.should.deep.equal(expectedValues[i]);
+        values.should.deep.equal(data[i]);
       });
     });
+
   });
 
   describe("Options", function() {

@@ -224,14 +224,15 @@
                     if (j > config.maxColumns) break;
 
                     var value = row[j],
-                        cellValue = j === 0 || config.displayAbsoluteValue ? value : formatPercentage(value, baseValue),
+                        formattedPercentage = formatPercentage(value, baseValue),
+                        cellValue = j === 0 || config.displayAbsoluteValue ? value : formattedPercentage,
                         opts = {};
 
                         if (!isEmpty(cellValue)) {
                             opts = {
                                 text: cellValue,
                                 title: j > 0 && config.rawNumberOnHover ? value : null,
-                                className: j === 0 ? 'people' : classNameFor(formatPercentage(value, baseValue))
+                                className: j === 0 ? 'people' : classNameFor(formattedPercentage)
                             };
                         } else if (config.drawEmptyCells) {
                             opts = { text: '-', className: 'empty' };
