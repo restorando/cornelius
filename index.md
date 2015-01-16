@@ -24,10 +24,6 @@ Just include the javascript and stylesheet files and you are ready to go. No jQu
 <script type="text/javascript" src="cornelius.js"></script>
 {% endhighlight %}
 
-If you are using [component](http://component.io):
-
-    $ component install restorando/cornelius
-
 # API
 
 There is only one method you can use:
@@ -153,9 +149,9 @@ If `rawNumberOnHover` is set to true, it will display the raw number while leavi
 
 Default: `true`
 
-## displayAbsoluteValue
+## displayAbsoluteValues
 
-If `displayAbsoluteValue` is set to true, absolute values will be displayed instead of the percentage value.
+If `displayAbsoluteValues` is set to true, absolute values will be displayed instead of the percentage value.
 
 Default: `false`
 
