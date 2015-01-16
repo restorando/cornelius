@@ -5,11 +5,7 @@
 
 ## Installation
 
-If you are using component:
-
-    $ component install restorando/cornelius
-
-Otherwise just include the `css` and `js` files.
+Just include the `css` and `js` files.
 
 ## API
 
@@ -17,17 +13,13 @@ You can read the full documentation in <http://restorando.github.io/cornelius>
 
 ## Running the tests
 
-* Install component
+* Install dependencies
 
-        $ npm install -g component
+        $ npm install
 
-* Compile the source and specs
+* Run the tests
 
-        $ make
-
-* Open the test runner in a browser
-
-        $ open test/index.html
+        $ npm test
 
 ## License
 
