@@ -38,6 +38,8 @@
 
         rawNumberOnHover: true,
 
+        displayAbsoluteValues: false,
+
         initialIntervalNumber: 1,
 
         classPrefix: 'cornelius-',
@@ -192,7 +194,7 @@
                         floatValue = value && parseFloat(value),
                         highestLevel = null;
 
-                    var classNames = ['percentage'];
+                    var classNames = [config.displayAbsoluteValues ? 'absolute' : 'percentage'];
 
                     for (var level in levels) {
                         if (floatValue >= levels[level][0] && floatValue < levels[level][1]) {
@@ -222,14 +224,15 @@
                     if (j > config.maxColumns) break;
 
                     var value = row[j],
-                        cellValue = j === 0 ? value : formatPercentage(value, baseValue),
+                        formattedPercentage = formatPercentage(value, baseValue),
+                        cellValue = j === 0 || config.displayAbsoluteValues ? value : formattedPercentage,
                         opts = {};
 
                         if (!isEmpty(cellValue)) {
                             opts = {
                                 text: cellValue,
                                 title: j > 0 && config.rawNumberOnHover ? value : null,
-                                className: j === 0 ? 'people' : classNameFor(cellValue)
+                                className: j === 0 ? 'people' : classNameFor(formattedPercentage)
                             };
                         } else if (config.drawEmptyCells) {
                             opts = { text: '-', className: 'empty' };
@@ -284,8 +287,8 @@
         }
     });
 
-    if (typeof jQuery !== "undefined" && jQuery !== null) {
-        jQuery.fn.cornelius = function(options) {
+    if (typeof globals.jQuery !== "undefined" && globals.jQuery !== null) {
+        globals.jQuery.fn.cornelius = function(options) {
             return this.each(function() {
                 options.container = this;
                 return Cornelius.draw(options);
@@ -294,10 +297,6 @@
     }
 
     // show it to the world!!
+    globals.Cornelius = Cornelius;
 
-    if (globals.exports) {
-        globals.exports = Cornelius;
-    } else {
-        globals.Cornelius = Cornelius;
-    }
-})(typeof module === "function" ? module : window);
+})(window);

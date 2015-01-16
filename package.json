@@ -1,0 +1,36 @@
+{
+  "name": "cornelius",
+  "version": "0.1.0",
+  "description": "A simple Cohort Visualization library",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/restorando/cornelius.git"
+  },
+  "keywords": [
+    "cohort",
+    "chart",
+    "cohorts"
+  ],
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "jquery": "^2.1.1",
+    "karma": "^0.12.19",
+    "karma-chai-plugins": "^0.2.3",
+    "karma-mocha": "^0.1.7",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "lodash": "^2.4.1"
+  },
+  "author": "Gabriel Schammah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/restorando/cornelius/issues"
+  },
+  "homepage": "https://github.com/restorando/cornelius"
+}

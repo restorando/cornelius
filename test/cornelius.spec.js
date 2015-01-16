@@ -8,11 +8,6 @@ describe('Cornelius', function() {
     [400,256,120],
     [600,340]
   ],
-
-  $ = jQuery = require('jquery'),
-
-  Cornelius = require('cornelius'),
-
   $container;
 
   function draw(options) {
@@ -136,6 +131,26 @@ describe('Cornelius', function() {
         values.should.deep.equal(expectedValues[i]);
       });
     });
+  });
+
+  describe("Absolute numbers", function() {
+
+    var expectedValues = [
+      ["700", "600", "500", "400", "70", "20"],
+      ["549", "336", "221", "122", "115"],
+      ["882", "250", "32", "18"],
+      ["379", "254", "314"],
+      ["256", "120"],
+      ["340"]
+    ];
+
+    it("renders the absolute values", function() {
+      draw({displayAbsoluteValues: true});
+      $container.find('tr:not(:first)').each(function(i, el){
+        var values = $(el).find('.cornelius-absolute').map(function() { return this.textContent; }).get();
+        values.should.deep.equal(expectedValues[i]);
+      });
+    });
 
   });
 
@@ -191,9 +206,9 @@ describe('Cornelius', function() {
     });
   });
 
-  describe("Alternative constructos", function() {
+  describe("Alternative constructor", function() {
     it("accepts a convenient shortcut constructor", function() {
-      var $container = $('<div/>');
+      $container = $('<div/>');
 
       Cornelius.draw({
         cohort: data,
@@ -205,7 +220,7 @@ describe('Cornelius', function() {
     });
 
     it("can be instantiated via jQuery", function() {
-      var $container = $('<div/>');
+      $container = $('<div/>');
       $container.cornelius({
         cohort: data,
         initialDate: new Date(2011, 3)
