@@ -24,10 +24,6 @@ Just include the javascript and stylesheet files and you are ready to go. No jQu
 <script type="text/javascript" src="cornelius.js"></script>
 {% endhighlight %}
 
-If you are using [component](http://component.io):
-
-    $ component install restorando/cornelius
-
 # API
 
 There is only one method you can use:
@@ -152,6 +148,12 @@ Default: `true`
 If `rawNumberOnHover` is set to true, it will display the raw number while leaving the mouse on top of the cell.
 
 Default: `true`
+
+## displayAbsoluteValues
+
+If `displayAbsoluteValues` is set to true, absolute values will be displayed instead of the percentage value.
+
+Default: `false`
 
 ## initialIntervalNumber
 
