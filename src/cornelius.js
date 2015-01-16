@@ -38,7 +38,7 @@
 
         rawNumberOnHover: true,
 
-        displayAbsoluteValue: false,
+        displayAbsoluteValues: false,
 
         initialIntervalNumber: 1,
 
@@ -194,7 +194,7 @@
                         floatValue = value && parseFloat(value),
                         highestLevel = null;
 
-                    var classNames = [config.displayAbsoluteValue ? 'absolute' : 'percentage'];
+                    var classNames = [config.displayAbsoluteValues ? 'absolute' : 'percentage'];
 
                     for (var level in levels) {
                         if (floatValue >= levels[level][0] && floatValue < levels[level][1]) {
@@ -225,7 +225,7 @@
 
                     var value = row[j],
                         formattedPercentage = formatPercentage(value, baseValue),
-                        cellValue = j === 0 || config.displayAbsoluteValue ? value : formattedPercentage,
+                        cellValue = j === 0 || config.displayAbsoluteValues ? value : formattedPercentage,
                         opts = {};
 
                         if (!isEmpty(cellValue)) {
@@ -287,8 +287,8 @@
         }
     });
 
-    if (typeof jQuery !== "undefined" && jQuery !== null) {
-        jQuery.fn.cornelius = function(options) {
+    if (typeof globals.jQuery !== "undefined" && globals.jQuery !== null) {
+        globals.jQuery.fn.cornelius = function(options) {
             return this.each(function() {
                 options.container = this;
                 return Cornelius.draw(options);
@@ -297,10 +297,6 @@
     }
 
     // show it to the world!!
+    globals.Cornelius = Cornelius;
 
-    if (globals.exports) {
-        globals.exports = Cornelius;
-    } else {
-        globals.Cornelius = Cornelius;
-    }
-})(typeof module === "function" ? module : window);
+})(window);
